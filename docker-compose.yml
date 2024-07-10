@@ -4,12 +4,13 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: /run/secrets/db_password
+      #POSTGRES_PASSWORD: /run/secrets/db_password
+      POSTGRES_PASSWORD: 82XAK!rvx_jYCXP_L_
       POSTGRES_DB: bookstore
     ports:
       - "5432:5432"
-    secrets:
-      - db_password
-secrets:
-  db_password:
-    file: db_password.txt
+#     secrets:
+#       - db_password
+# secrets:
+#   db_password:
+#     file: db_password.txt
