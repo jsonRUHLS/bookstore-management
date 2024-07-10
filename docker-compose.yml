@@ -5,7 +5,7 @@ services:
     restart: always
     environment:
       #POSTGRES_PASSWORD: /run/secrets/db_password
-      POSTGRES_PASSWORD: 82XAK!rvx_jYCXP_L_
+      POSTGRES_PASSWORD: 
       POSTGRES_DB: bookstore
     ports:
       - "5432:5432"
