@@ -1,8 +1,8 @@
 package com.ruhlinit.spring_bookstore_management.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,19 +18,24 @@ import com.ruhlinit.spring_bookstore_management.repositories.BookRepository;
 
 import lombok.RequiredArgsConstructor;
 
-
-
 @RestController
 @RequestMapping("/books")
 @RequiredArgsConstructor
 public class BookController {
     private final BookRepository bookRepository;
+
     @PostMapping
-    @CacheEvict(value = "books", allEntries = true)
+    // @CacheEvict(value = "books", allEntries = true)
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
         Book savedBook = bookRepository.save(book);
         return ResponseEntity.ok(savedBook);
     }
+
+    @GetMapping
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBook(@PathVariable Long id) {
         Optional<Book> book = bookRepository.findById(id);
@@ -58,5 +63,5 @@ public class BookController {
         }
         return ResponseEntity.notFound().build();
     }
-    
+
 }
