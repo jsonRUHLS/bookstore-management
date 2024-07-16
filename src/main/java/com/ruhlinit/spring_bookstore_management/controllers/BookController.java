@@ -3,6 +3,7 @@ package com.ruhlinit.spring_bookstore_management.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class BookController {
     private final BookRepository bookRepository;
 
     @PostMapping
-    // @CacheEvict(value = "books", allEntries = true)
+    @CacheEvict(value = "books", allEntries = true)
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
         Book savedBook = bookRepository.save(book);
         return ResponseEntity.ok(savedBook);
@@ -43,6 +44,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
+    @CacheEvict(value = "books", allEntries = true)
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
         return bookRepository.findById(id)
                 .map(existingBook -> {
@@ -56,6 +58,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
+    @CacheEvict(value = "books", key = "#id")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
